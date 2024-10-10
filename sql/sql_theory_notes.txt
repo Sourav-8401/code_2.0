@@ -1,0 +1,5 @@
+what is Database?
+data is unorganized information. we create database to organise this data and we use
+DBMS for this.  using DBMS we can easily store, access , manipulate data held on a computer.
+
+where clause = use to filter on specific condition

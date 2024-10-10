@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        .maincontainer {
+            width: 80vw;
+            display: flex;
+            flex-wrap: wrap;
+            margin: auto;
+        }
+
+        .showContainer img {
+            width: 30px;
+        }
+
+        .showContainer {
+            font-size: 12px;
+            margin: 5px 0;
+        }
+
+        .inputBox {
+            width: 80vw;
+            height: 30vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="maincontainer">
+        <div class="commentList">
+            <div class="showContainer" >
+                <img src="logo.png" alt="#">
+                <span class="name">user_kumar</span>
+                <div class="comment" id="comment5">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam impedit, expedita consequatur
+                    cumque, voluptates perferendis amet quod deleniti eligendi aliquid ipsa, nihil ullam quis? Quasi
+                    nobis minus veniam magnam porro.
+                    <button class="replyBox" onclick="addComments(event)">reply</button>
+                    <div class="replyList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="text" class="inputBox" /><br />
+    <button id="cmtBtn">comment</button>
+
+    <script>
+        let i = 1;
+        const addComment = document.querySelector(".inputBox");
+        document.querySelector("#cmtBtn").addEventListener("click", () => {
+            const commentl = document.querySelector(".commentList");
+            const myDiv = document.createElement('div');
+            //const id = i;
+            myDiv.setAttribute('id', `comment${i}`);
+            myDiv.setAttribute("class", "showContainer");
+            myDiv.innerHTML = `<img src="logo.png" alt="#">
+        <span class="name">${i++}user_kumar</span>
+        <div class="comment">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam impedit, expedita consequatur cumque, voluptates perferendis amet quod deleniti eligendi aliquid ipsa, nihil ullam quis? Quasi nobis minus veniam magnam porro.
+            <button class="replyBox">reply</button>
+            <div class="replyList"></div>
+        </div>`;
+            commentl.appendChild(myDiv);
+        });
+        function addComments(event){
+            //const parentElement = event.target.closest('.showContainer');
+            //const replyList = parentElement.querySelector('.replyList');
+            const parentElement = event.target.parentElement;
+            const parentId = parentElement.id;
+            const replyList = parentElement.querySelector('.replyList');
+            const mydiv = document.createElement('div');
+            mydiv.setAttribute('class', 'showContainer');
+            mydiv.innerHTML = `<img src="logo.png" alt="#">
+        <span class="name">user_kumar</span>
+        <div class="comment">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam impedit, expedita consequatur cumque, voluptates perferendis amet quod deleniti eligendi aliquid ipsa, nihil ullam quis? Quasi nobis minus veniam magnam porro.
+            <button class="replyBox">reply</button>
+            <div class="replyList"></div>
+        </div>`;
+            replyList.appendChild(mydiv);
+        }
+    </script>
+</body>
+
+</html>
