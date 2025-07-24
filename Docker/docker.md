@@ -15,6 +15,8 @@
 
 - **-t**: tag (name)
 
+- **-d**: to keep docker container running in the bg, and return to main terminal
+
   
 
 ##  Main Line cmd:
@@ -23,7 +25,7 @@
 
 - **to run any cmd inside container** : docker exec *container_name* ls. **eg:** docker exec pendatic_mendel ls
 
-- **to see images** : docker images ls
+- **to see images** : docker image ls
 
 - **Port mapping** : docker run -it p 1025:1025 container_name
 
@@ -63,7 +65,6 @@ save the file with name : "dockerfile" where package.json is present
     RUN apt-get install -y nodejs
     
       
-    
     WORKDIR /usr/app
     
     COPY package.json package.json
@@ -89,6 +90,36 @@ Now run : docker build -t first-nodejs .
 
 ##  Docker compose
 
+> In industry we keep DB, main web app, backend, frontend, in different systems. This lead to making of multiple container and managing it. Here, docker compose help in it, using docker-compose.yml file. First it need to be installed.
+
+> By default it create same network and volumes
+
+### docker-compose.yml
+    version: '3' <version of docker-compose file using>
+    services:
+        webapp1:
+            image: nginx
+            ports: 
+                - "8000:80"
+                - "8001:9000"
+        db:
+            image: sql 5.2
+            ports:
+                - "3306:3306"
+
+- **to run compose file** : if file name is docker-compose.yml **run** - docker-compose up **else run** - docker-compose -f filename.json/filename.yml up
+
+- **to shut down running compose container**: docker-compose down
+
+- **just create container and don't run**: docker-compose create
+
+- **to run the containers after creating**: docker-componse start
+
+- **to stop the container**: docker-compose stop
+
+- **to delete the container**: docker-compose rm
+
+
   
 
 ##  Docker network
@@ -102,3 +133,6 @@ Now run : docker build -t first-nodejs .
 - **To create own network**: docker network create -d bridge -network_name- (eg: youtube)
 
 - **To run on specific network**: docker run -it --network=milkyway --name wanda busybox
+
+
+docker cp mystorage/myfile.txt mycontainer:/app/

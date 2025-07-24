@@ -1,0 +1,6 @@
+version : '3'
+services: 
+    webApp1: 
+        image: nginx
+        ports: 
+          - "8000:80"
