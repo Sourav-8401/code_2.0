@@ -23,7 +23,7 @@
 
 - **to make image/container** : install any image that will automatically make a container. **Cmd** : docker run -it ubuntu
 
-- **to run any cmd inside container** : docker exec *container_name* ls. **eg:** docker exec pendatic_mendel ls
+- **to run any cmd inside container** : docker exec *container_name* ls. **eg:** docker exec pendatic_mendel bin/bash
 
 - **to see images** : docker image ls
 
@@ -50,7 +50,9 @@
 
 save the file with name : "dockerfile" where package.json is present
 
-    FROM ubuntu
+    ARG MAPPED_ARG
+
+    FROM ubuntu:$MAPPED_ARG
     
     RUN apt-get update
     
@@ -102,10 +104,40 @@ Now run : docker build -t first-nodejs .
             ports: 
                 - "8000:80"
                 - "8001:9000"
+            depends_on:
+                -db    
+            networks:
+                - appnetwork2
+            volumes:
+                - myredisdata:/data
+            environment:
+                -NAME=Sourav
         db:
             image: sql 5.2
             ports:
                 - "3306:3306"
+            env_file:
+                - .env
+        frontend:
+            image: 'httpd:alpine'
+            ports:
+                - "8003:80"
+            volumes:
+                - ./ot/:/usr/local/apache2/htdocs/
+        my-app-from-dockerfile:
+            build: 
+                context: .  <location of dockerfile>
+                dockerfile: fileName
+                args:
+                   - MYARG=3.4
+            ports:
+                - "5000:5000"
+            image: 'sourav.kumar/my-app:latest(tag)' <name of image to be post on dockerhub> 
+    networks:
+        appnetwork:
+        appnetwork2:
+    volumes:
+        myredisdata:          
 
 - **to run compose file** : if file name is docker-compose.yml **run** - docker-compose up **else run** - docker-compose -f filename.json/filename.yml up
 
@@ -117,10 +149,22 @@ Now run : docker build -t first-nodejs .
 
 - **to stop the container**: docker-compose stop
 
+- **to list running containers of compose**: docker-compose ps
+
 - **to delete the container**: docker-compose rm
+- **to see the ports of services** : docker-compose port <service-name>
 
+- **to see logs of services open ports**: docker-compose logs -f 
 
-  
+- **to run cmd inside of services** : docker-compose exec <service-name>webapp1 ls
+
+- **to scale services**: docker-compose scale webapp1=4 webapp2-2
+
+- **task manager of each services**: docker-compose top
+
+- **to map arguments from docker-compose to dockerfile**: use **args: -ARG1=dummy** and in dockerfile use **ARG ARG1** before From
+
+-**to set env file**: write enviro../env_file in docker-compse then exec: docker-compose <service_name> env
 
 ##  Docker network
 
